@@ -90,6 +90,13 @@ This approach ensures security is embedded throughout the delivery lifecycle rat
 
 Screenshots available in docs/screenshots/
 
+## Day 2 : Push Image to Amazon ECR
+- Created a private ECR repository and enabled scan-on-push
+- Authenticated Docker to the registry using the AWS CLI
+- Tagged the local image with the ECR repository URL and pushed it so ECS can pull exact same image later
+
+Screenshots available in docs/screenshots/
+
 🔹 Author
 
 Built as part of my transition into cloud-native DevSecOps engineering.
