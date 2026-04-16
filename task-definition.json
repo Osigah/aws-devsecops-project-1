@@ -1,0 +1,42 @@
+{
+  "family": "flask-demo-task",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "256",
+  "memory": "512",
+  "executionRoleArn": "arn:aws:iam::233422680010:role/ecsTaskExecutionRoleFlaskDemo",
+  "runtimePlatform": {
+    "operatingSystemFamily": "LINUX"
+  },
+  "containerDefinitions": [
+    {
+      "name": "flask-demo",
+      "image": "233422680010.dkr.ecr.us-east-1.amazonaws.com/flask-demo:1.0.0",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 5000,
+          "protocol": "tcp"
+        }
+      ],
+      "environment": [
+        {
+          "name": "APP_ENV",
+          "value": "sandbox"
+        },
+        {
+          "name": "APP_VERSION",
+          "value": "1.0.0"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/flask-demo",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
+    }
+  ]
+}
