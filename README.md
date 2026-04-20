@@ -187,12 +187,11 @@ For this initial deployment:
 * Direct access to container enabled
 
 ### Planned Improvements
-
-* Introduce an Application Load Balancer (ALB)
-* Restrict direct public access
-* Improve network segmentation
-* Implement Infrastructure as Code using Terraform
-* Add CI/CD pipeline
+- Automate infrastructure provisioning using Terraform
+- Complete GitHub-triggered CI/CD pipeline in a less restricted AWS account
+- Add Secrets Manager integration
+- Add static analysis and dependency scanning
+- Introduce HTTPS on the ALB
 
 ---
 ## Evidence
@@ -230,6 +229,33 @@ Internet to ALB to ECS Fargate to CloudWatch (Logs)
 - Provides a foundation for HTTPS and domain routing
 - Aligns with production-grade architecture patterns
 ---
+## Phase 5: CI/CD Pipeline (Attempted)
+
+### Planned Design
+The intended CI/CD flow for this project was:
+
+GitHub → CodePipeline → CodeBuild → Amazon ECR → Amazon ECS Fargate → ALB
+
+### What Was Implemented
+- Created a GitHub connection using AWS Developer Tools Connections
+- Configured the pipeline source stage to use the GitHub repository
+- Prepared the repository for CodeBuild with a `buildspec.yml`
+- Created a CodeBuild project for Docker image build and push
+- Designed the deployment flow to update the ECS service automatically
+
+### Sandbox Limitation Encountered
+Pipeline creation could not be completed in the A Cloud Guru sandbox because of an AWS Organizations Service Control Policy (SCP) restriction on:
+
+`codestar-connections:PassConnection`
+
+This prevented CodePipeline from using the GitHub connection resource, even though the connection itself was created successfully.
+
+### What This Means
+This was an environment-level governance restriction rather than a pipeline design issue.
+
+### Planned Next Step
+- Complete the GitHub-triggered CI/CD pipeline in a less restricted AWS account
+- Continue infrastructure automation using Terraform so the environment can be rebuilt consistently after sandbox resets
 
 ## Author
 

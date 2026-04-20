@@ -4,14 +4,14 @@
   "requiresCompatibilities": ["FARGATE"],
   "cpu": "256",
   "memory": "512",
-  "executionRoleArn": "arn:aws:iam::233422680010:role/ecsTaskExecutionRoleFlaskDemo",
+  "executionRoleArn": "arn:aws:iam::872111493358:role/ecsTaskExecutionRoleFlaskDemo",
   "runtimePlatform": {
     "operatingSystemFamily": "LINUX"
   },
   "containerDefinitions": [
     {
       "name": "flask-demo",
-      "image": "233422680010.dkr.ecr.us-east-1.amazonaws.com/flask-demo:1.0.0",
+      "image": "872111493358.dkr.ecr.us-east-1.amazonaws.com/flask-demo:1.0.0",
       "essential": true,
       "portMappings": [
         {
