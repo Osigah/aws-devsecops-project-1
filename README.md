@@ -111,7 +111,7 @@ docs/ → Architecture diagrams, screenshots and notes
 
 ---
 
-## Day 1: Local Container Setup
+## Phase 1: Local Container Setup
 
 * Built a Flask API with 3 endpoints
 * Containerized the application using Docker
@@ -120,7 +120,7 @@ docs/ → Architecture diagrams, screenshots and notes
 
 ---
 
-## Day 2: Image Pushed to ECR
+## Phase 2: Image Pushed to ECR
 
 * Created ECR repository
 * Enabled image scanning (scan-on-push)
@@ -129,7 +129,7 @@ docs/ → Architecture diagrams, screenshots and notes
 
 ---
 
-## Day 3: Deployment on ECS Fargate
+## Phase 3: Deployment on ECS Fargate
 
 ### Implementation
 
@@ -137,7 +137,7 @@ docs/ → Architecture diagrams, screenshots and notes
 * Created ECS task execution role
 * Created and registered task definition
 * Created ECS cluster
-* Configured networking (default VPC, subnets, security group)
+* Configured networking (used default VPC, subnets, security group)
 * Created ECS service with desired count of 1
 * Enabled public IP for initial testing
 * Verified application via public endpoint
@@ -173,12 +173,11 @@ docs/ → Architecture diagrams, screenshots and notes
 
 ## Troubleshooting
 
-* Container startup issues → checked CloudWatch logs
-* Image pull errors → verified ECR URI and permissions
-* Connectivity issues → verified port 5000 and security group rules
+* Container startup issues : checked CloudWatch logs
+* Image pull errors : verified ECR URI and permissions
+* Connectivity issues : verified port 5000 and security group rules
 
 ---
-
 ## Notes
 
 For this initial deployment:
@@ -196,7 +195,6 @@ For this initial deployment:
 * Add CI/CD pipeline
 
 ---
-
 ## Evidence
 
 * ECS service reached steady state
@@ -204,6 +202,33 @@ For this initial deployment:
 * Application tested successfully
 * Logs available in CloudWatch
 
+## Phase 4: Application Load Balancer Integration
+
+### Implementation
+- Created an internet-facing Application Load Balancer (ALB)
+- Created a target group with target type `ip` (required for ECS Fargate)
+- Configured health checks on `/health`
+- Added HTTP listener on port 80
+- Updated ECS service to register tasks with the target group
+- Restricted task access to only allow traffic from ALB security group
+
+### Result
+- Application successfully accessed via ALB DNS endpoint
+- Verified endpoints using Postman
+- Target group health checks passing
+
+### Architectural Improvement
+Previous:
+Direct public access to ECS task via public IP
+
+Current:
+Internet to ALB to ECS Fargate to CloudWatch (Logs)
+
+## What this does
+- Removes direct public exposure to containers
+- Enables scalability and load balancing
+- Provides a foundation for HTTPS and domain routing
+- Aligns with production-grade architecture patterns
 ---
 
 ## Author
