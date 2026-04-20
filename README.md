@@ -178,28 +178,6 @@ docs/ → Architecture diagrams, screenshots and notes
 * Connectivity issues : verified port 5000 and security group rules
 
 ---
-## Notes
-
-For this initial deployment:
-
-* Default VPC was used
-* Public IP assigned for testing
-* Direct access to container enabled
-
-### Planned Improvements
-- Automate infrastructure provisioning using Terraform
-- Complete GitHub-triggered CI/CD pipeline in a less restricted AWS account
-- Add Secrets Manager integration
-- Add static analysis and dependency scanning
-- Introduce HTTPS on the ALB
-
----
-## Evidence
-
-* ECS service reached steady state
-* Task successfully running (1/1)
-* Application tested successfully
-* Logs available in CloudWatch
 
 ## Phase 4: Application Load Balancer Integration
 
